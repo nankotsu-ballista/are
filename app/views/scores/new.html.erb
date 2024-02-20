@@ -1,0 +1,23 @@
+<h1>Scores#new</h1>
+<p>Find me in app/views/scores/new.html.erb</p>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @score) do |f| %>
+      <%= f.label :me %>
+      <%= f.text_field :me %>
+
+      <%= f.label :enemy %>
+      <%= f.text_field :enemy %>
+
+      <%= f.submit "Add", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+
+
+  <% @sex.each do |scoret| %>
+    <li>
+      <%= scoret.me %>, <%= scoret.enemy%>
+    </li>
+  <% end %>

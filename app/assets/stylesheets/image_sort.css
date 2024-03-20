@@ -1,0 +1,15 @@
+/* app/assets/stylesheets/image_sort.css */
+.dropzone {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  float: left;
+  margin: 10px;
+}
+
+.image {
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  cursor: move;
+}

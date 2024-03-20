@@ -10,12 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_12_093816) do
-  create_table "scores", force: :cascade do |t|
-    t.string "enemy"
-    t.string "me"
+ActiveRecord::Schema[7.0].define(version: 2024_03_10_041520) do
+  create_table "heros", force: :cascade do |t|
+    t.string "name"
+    t.integer "proprity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.string "me"
+    t.string "enemy"
+    t.integer "point"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
 end

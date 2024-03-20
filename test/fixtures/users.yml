@@ -1,11 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  me: MyString
-  enemy: MyString
-  point: 1
+  name: MyString
+  email: MyString
 
 two:
-  me: MyString
-  enemy: MyString
-  point: 1
+  name: MyString
+  email: MyString

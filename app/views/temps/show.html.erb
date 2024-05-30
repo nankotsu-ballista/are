@@ -1,0 +1,12 @@
+<h1>Hero</h1>
+<% @thetemp.each do |sap| %>
+<%=sap.name%>
+<% if sap.image.attached? %>
+    <%= image_tag sap.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+<% end %>
+<%end%>
+<h1>Situation</h1>
+<%= link_to 'これを使ってメタを作る', update_doing_temp_user_path(current_user, user_id: params[:user_id], temp_id: params[:id]) %>
+<% if current_user.id == params[:user_id].to_i %>
+  <br><%= link_to 'テンプレートを編集する', update_editing_temp_user_path(current_user, user_id: params[:user_id], temp_id: params[:id]) %>
+<% end %>

@@ -1,0 +1,2 @@
+class ScoreMap < ApplicationRecord
+end

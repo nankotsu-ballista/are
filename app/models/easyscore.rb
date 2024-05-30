@@ -1,0 +1,2 @@
+class Easyscore < ApplicationRecord
+end

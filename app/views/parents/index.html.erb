@@ -1,0 +1,55 @@
+<!-- app/views/parents/index.html.erb -->
+<h1>Parents</h1>
+
+<%= form_with(model: @parent) do |form| %>
+  <% if @parent.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@parent.errors.count, "error") %> prohibited this parent from being saved:</h2>
+      <ul>
+        <% @parent.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<% @parents.each do |parent| %>
+  <h2><%= parent.name %></h2>
+  <%= form_with(model: [parent, @child]) do |form| %>
+    <% if @child.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@child.errors.count, "error") %> prohibited this child from being saved:</h2>
+        <ul>
+          <% @child.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+
+  <ul>
+    <% parent.children.each do |child| %>
+      <li><%= child.name %></li>
+    <% end %>
+  </ul>
+<% end %>

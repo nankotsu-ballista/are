@@ -1,0 +1,2 @@
+class Easykihon < ApplicationRecord
+end

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  me: MyString
+  situation_id: 1
+  situationname: MyString
+  temp_id: 1
+  metamon_id: 1
+  user_id: 1
+
+two:
+  me: MyString
+  situation_id: 1
+  situationname: MyString
+  temp_id: 1
+  metamon_id: 1
+  user_id: 1

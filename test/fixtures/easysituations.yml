@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  situationname: MyString
+  meta_id: 1
+  user_id: 1
+  x: 1
+  'y': 1
+  name1: MyString
+  name2: MyString
+
+two:
+  situationname: MyString
+  meta_id: 1
+  user_id: 1
+  x: 1
+  'y': 1
+  name1: MyString
+  name2: MyString

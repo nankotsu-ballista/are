@@ -1,1 +1,25 @@
-<%= @user.name %>, <%= @user.email %>
+<style>
+  li, a,h1 {
+    text-align: left;
+  }
+</style>
+<h1><%= @user2.name %>  さんのページ</h1>
+<br><h1>userのメタ</h1>
+<%@esa=@user2.metamons%>
+<% @esa.each do |de| %>
+    <li>
+      <%= link_to de.name, {controller: "scores", action: "easymain", usertemp_id: de.tempuser_id, user_id: de.user_id, metamon_id: de.truemetamonid} %><br>説明:<br><%= de.setumei %><br>ゲームの名前:<%= de.gamename %><br><%= de.metaid %>  <% if current_user.id == @user2.id %><%= button_to "Delete", metamon_path(de), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %><% end %>
+    </li>
+<% end %>
+<h1>userのテンプレート</h1>
+<% @usertemp.each do |ra| %>
+<li>
+id:<%= ra.id %><br>name:<%= link_to ra.name, tempshow_path(ra, user_id: @user2.id, id: ra.temp_id) %>
+<% if current_user.id == @user2.id %>
+<% if ra.image.attached? %>
+    <%= image_tag ra.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+<% end %>
+  <%= button_to "Delete", user_path(ra), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+<% end %>
+</li>
+<% end %>

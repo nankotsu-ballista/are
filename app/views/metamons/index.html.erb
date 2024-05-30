@@ -1,0 +1,15 @@
+<h1>metamons</h1>
+
+<%= search_form_for @q do |f| %>
+  <%= f.label :name_cont %>
+  <%= f.search_field :name_cont %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<% @metamonall.each do |sap| %>
+id: <%= sap.id %><br>
+name:<%= link_to sap.name, {controller: "scores", action: "main", user_id: sap.user_id, metamon_id: sap.id} %>
+<% if sap.image.attached? %>
+    <%= image_tag sap.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+<% end %>
+<%end%>

@@ -1,0 +1,11 @@
+<h1>Temps</h1>
+
+<%= search_form_for @q do |f| %>
+  <%= f.label :name_cont %>
+  <%= f.search_field :name_cont %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<% @temps.each do |temall| %>
+  <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id} %><br>
+<% end %> 

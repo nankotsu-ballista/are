@@ -1,0 +1,21 @@
+<style>
+  li, a {
+    text-align: left;
+  }
+</style>
+<li>
+<%= search_form_for @q do |f| %>
+  <%= f.label :name_cont %>
+  <%= f.search_field :name_cont %>
+  <%= f.submit %>
+<% end %>
+
+
+<% @metamonall.each do |sap| %>
+id: <%= sap.id %><br>
+name:<%= link_to sap.name, {controller: "scores", action: "easymain", usertemp_id: sap.tempuser_id, user_id: sap.user_id, metamon_id: sap.truemetamonid} %>
+<% if sap.image.attached? %>
+    <%= image_tag sap.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+<% end %>
+<%end%>
+</li>

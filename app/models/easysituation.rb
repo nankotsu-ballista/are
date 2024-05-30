@@ -1,0 +1,2 @@
+class Easysituation < ApplicationRecord
+end

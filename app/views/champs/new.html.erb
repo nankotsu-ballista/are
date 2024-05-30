@@ -1,0 +1,64 @@
+<h1>テンプレートを作ろう</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @champ, url: set_tempting_true_champs_path, method: :post) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :image %>
+      <%= f.file_field :image %>
+
+      <%= f.submit "Add new champ", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="d-flex flex-row flex-wrap">
+  <% @champl.each do |champ| %>
+    <div class="d-inline-flex align-items-center mb-3 mr-3">
+      <% if champ.image.attached? %>
+        <%= image_tag champ.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+      <% end %>
+      <span><%= champ.name %></span>
+      <span class="ml-2"><%= champ.champid %></span>
+      <%= button_to "Delete", champ_path(champ), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger ml-2" %>
+    </div>
+  <% end %>
+</div>
+
+
+<%= form_with(model: @joukyou, url: joukyous_path) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :image %>
+  <%= f.file_field :image %>
+
+  <%= f.submit "Add new jokyou", class: "btn btn-primary" %>
+<% end %>
+
+
+<div class="d-flex flex-row flex-wrap">
+  <% @joukyoul.each do |joukyou| %>
+    <div class="d-inline-flex align-items-center mb-3 mr-3">
+      <% if joukyou.image.attached? %>
+        <%= image_tag joukyou.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+      <% end %>
+      <span><%= joukyou.name %></span>
+    </div>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%= link_to "完成！",hontouroku_path%>

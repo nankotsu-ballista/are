@@ -1,0 +1,28 @@
+
+ <h1>メタの説明</h1> 
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @metamon) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :setumei %>
+      <%= f.text_field :setumei %>
+
+      <%= f.label :gamename %>
+      <%= f.text_field :gamename %>
+
+
+
+
+     <%= f.submit "Create Meta", class: "btn btn-primary" %>
+  <% end %>
+</div>
+</div>
+
+<% @metamol.each do |de| %>
+    <li>
+      <%= de.name %><%= de.setumei %><%= de.gamename %><%= de.metaid %>  <%= button_to "Delete", metamon_path(de), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+    </li>
+<% end %>

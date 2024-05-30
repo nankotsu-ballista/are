@@ -1,0 +1,16 @@
+<style>
+  li {
+    text-align: left;
+  }
+</style>
+<li>
+<%= search_form_for @q do |f| %>
+  <%= f.label :name_cont %>
+  <%= f.search_field :name_cont %>
+  <%= f.submit %>
+<% end %>
+
+<% @tempall.each do |temall| %>
+  <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id} %><br>
+<% end %>
+</li>

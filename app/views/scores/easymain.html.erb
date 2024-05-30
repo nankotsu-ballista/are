@@ -1,0 +1,159 @@
+<style>
+  form, select, label {
+    float: left;
+  }
+</style>
+
+<h1>PickRecommender</h1>
+
+  <div id="scores" data-scores="<%= @score.to_json %>"></div> 
+<%= javascript_include_tag 'application' %>
+<%= include_gon %>
+<ul>
+  <div id="scores" data-scores="<%= @score.to_json %>"></div> 
+<%= javascript_include_tag 'application' %>
+<%= include_gon %>
+<ul>
+
+<%= label_tag 'me1', 'Me1:' %>
+<%= select_tag 'me1', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me1' %>
+
+<%= label_tag 'me2', 'Me2:' %>
+<%= select_tag 'me2', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me2' %>
+
+<%= label_tag 'me3', 'Me3:' %>
+<%= select_tag 'me3', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me3' %>
+
+<%= label_tag 'me4', 'Me4:' %>
+<%= select_tag 'me4', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me4' %>
+<br>
+</br>
+<%= label_tag 'enemy1', 'Enemy1:' %>
+<%= select_tag 'enemy1', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy1' %>
+
+<%= label_tag 'enemy2', 'Enemy2:' %>
+<%= select_tag 'enemy2', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy2' %>
+
+<%= label_tag 'enemy3', 'Enemy3:' %>
+<%= select_tag 'enemy3', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy3' %>
+
+<%= label_tag 'enemy4', 'Enemy4:' %>
+<%= select_tag 'enemy4', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy4' %>
+
+<%= label_tag 'enemy5', 'Enemy5:' %>
+<%= select_tag 'enemy5', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy5' %>
+<br>
+</br>
+<%= label_tag 'map', 'map:' %>
+<%= select_tag 'map', options_for_select(@situations.map { |situations| [situations.name, situations.name] }), id: 'map' %>
+
+
+<button onclick="displayChampImage()">Display Image</button>
+
+<div id="imageContainer"></div>
+<div id="namesContainer"></div>
+<div id="matchCountContainer"></div>
+<script>
+function displayChampImage() {
+
+
+
+  var names = ['me1', 'me2', 'me3', 'me4', 'enemy1', 'enemy2', 'enemy3', 'enemy4', 'enemy5']
+    .map(id => document.getElementById(id).value)
+  document.getElementById('namesContainer').textContent = names;
+  themap='map'
+  // @sex2のデータのnameとme1が一致する数を計算します。
+ 
+  points=[]
+  for (var i=0; i<gon.champ.length; i++) {
+    points[i]=0
+  }
+  champs=[]
+  for (var q=0; q<gon.champ.length; q++) {
+    //champs[q]=String(gon.champ[q])
+    champs[q]=gon.champ[q].name
+  }
+ //シナジーの処理
+  for (var i=0; i<gon.synergy.length; i++) {
+     for (var j=0; j<4; j++) {
+      if (String(gon.synergy[i].name1) == String(names[j])) {
+      horizon=champs.indexOf(gon.synergy[i].name2);
+      points[horizon]=points[horizon]+gon.synergy[i].x/2
+       }
+       if (String(gon.synergy[i].name2) == String(names[j])) {
+      horizon=champs.indexOf(gon.synergy[i].name1);
+      points[horizon]=points[horizon]+gon.synergy[i].x/2
+       }
+      }
+     }
+  //カウンターの処理
+  for (var i=0; i<gon.counter.length; i++) {
+     for (var j=4; j<9; j++) {
+      if (String(gon.counter[i].name1) == String(names[j])) {
+      horizon=champs.indexOf(gon.counter[i].name2);
+      points[horizon]=points[horizon]-gon.counter[i].x/2
+       }
+      }
+     }
+   for (var i=0; i<gon.counter.length; i++) {
+     for (var j=4; j<9; j++) {
+      if (String(gon.counter[i].name2) == String(names[j])) {
+      horizon=champs.indexOf(gon.counter[i].name1);
+      points[horizon]=points[horizon]+gon.counter[i].x/2
+       }
+      }
+     }
+   //mapの処理
+  for (var i=0; i<gon.situation.length; i++) {
+      if (String(gon.situation[i].name1) == String(themap)) {
+      horizon=champs.indexOf(gon.situation[i].name2);
+      points[horizon]=points[horizon]+gon.situation[i].x
+      }
+     } 
+     //baseの処理
+  for (var i=0; i<gon.kihon.length; i++) {
+      horizon=champs.indexOf(gon.kihon[i].name2);
+      points[horizon]=points[horizon]+gon.situation[i].x
+      } 
+     var pairs = champs.map(function(champ, i) {
+  return { champ: champ, point: points[i] };
+});
+
+// pointsの値に基づいてソート
+pairs.sort(function(a, b) {
+  return b.point - a.point;
+});
+
+// ソートされたchamps配列を取得
+var sortedChamps = pairs.map(function(pair) {
+  return pair.champ;
+});
+// 以前の画像を削除します。
+document.getElementById('imageContainer').innerHTML = '';
+
+// sortedChampsの各要素に対応する画像を作成して表示します。
+pairs.forEach(function(pair) {
+  var img = document.createElement('img');
+  img.src = '/champs/' + pair.champ + '/image';
+  img.width = 140;  // 幅を100pxに設定
+  img.height = 140; // 高さを100pxに設定
+
+  // 画像の横にpointとnameを表示します。
+  var text = document.createTextNode(' ' + pair.champ + ': ' + pair.point);
+
+  var div = document.createElement('div');
+  div.appendChild(img);
+  div.appendChild(text);
+
+  document.getElementById('imageContainer').appendChild(div);
+
+  // 画像の後に改行を追加します。
+  var br = document.createElement('br');
+  document.getElementById('imageContainer').appendChild(br);
+});
+    //シチュエーションの処理  
+    //matchCount = champs.indexOf(gon.synergy.enemy)
+  matchCount = sortedChamps
+  document.getElementById('matchCountContainer').textContent = matchCount;
+}
+</script>

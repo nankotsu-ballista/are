@@ -1,0 +1,118 @@
+<h1>Scores#main</h1>
+  <% @sex.each do |scoret| %>
+  <%= content_tag :div, class: "score-item", style: "display: flex; align-items: center;" do %>
+    <%= content_tag :div, "#{scoret.me}, #{scoret.enemy}, #{scoret.point}", class: "score-info", style: "flex: 1;" %>
+    <%= button_to "Delete", score_path(scoret), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+  <% end %>
+  
+<% end %>
+tempid
+<%=@tempidcheck%>
+metamonid
+<%=@metamonidcheck%>
+userid
+<%=@userdoingtemp%>
+<%@instahero=@hero%>
+優先度
+<% @instahero.each do |de| %>
+    <li>
+      <%= de.name %>, <%= de.priority%>  
+    </li>
+  <% end %>
+  <% @sex2.each do |de| %>
+  <%de.priority=0%>
+  <% end %>
+  <% @sex2.each do |de| %>
+    <li>
+      名前:<%= de.name %>, 属性:<%= de.champid%>,優先度:<%= de.priority%>   
+    </li>
+  <% end %>
+  <br></br>
+  データの数
+  <%=Score.count%>
+  <div id="scores" data-scores="<%= @score.to_json %>"></div> 
+<%= javascript_include_tag 'application' %>
+<%= include_gon %>
+<script>
+function calculate2() {
+   var heroname =[];
+   var heropro =[];
+  for (mayo = 0; mayo < <%=Champ.count%>; mayo++){
+    heroname[mayo]=String(gon.vct[mayo].name);
+    heropro[mayo]=parseFloat(gon.vct[mayo].priority);
+    }
+    // 入力フォームから値を取得
+    var num11 = (document.getElementById('me1').value);
+    var num12 = (document.getElementById('me2').value);
+    var num13 = (document.getElementById('me3').value);
+    var num14 = (document.getElementById('me4').value);
+    var num21 = (document.getElementById('enemy1').value);
+    var num22 = (document.getElementById('enemy2').value);
+    var num23 = (document.getElementById('enemy3').value);
+    var num24 = (document.getElementById('enemy4').value);
+    var num25 = (document.getElementById('enemy5').value);
+    var mear=[num11,num12,num13,num14];
+    var enear=[num21,num22,num23,num24,num25];
+    var result="result:";
+    // 計算を実行
+    var judge=0;
+      for (var j = 0; j < 5; j++) {
+        for (k = 0; k < <%=Score.count%>; k++){
+           judge=0;
+           if (String(gon.wesg[k].enemy)==String(enear[j])) {
+             var posi = heroname.indexOf(String(gon.wesg[k].me));
+             heropro[posi]=heropro[posi]+parseFloat(gon.wesg[k].point);
+           }                             
+} 
+}
+var heropro2=[];
+var heroname2=[];
+for (ts = 0; ts < <%=Champ.count%>; ts++){
+var aryMax = function (a, b) {return Math.max(a, b);}
+var max = heropro.reduce(aryMax);
+var maxIndex = heropro.indexOf(max); 
+heropro2[ts]=heropro[maxIndex];
+heroname2[ts]=heroname[maxIndex];
+heropro[maxIndex]=-1000000
+}
+
+  
+for (mayo2 = 0; mayo2 < <%=Champ.count%>; mayo2++){
+    result=result+heroname2[mayo2]+String(heropro2[mayo2]);
+    }
+    document.getElementById('result2').innerText = result;
+
+}
+</script>
+
+<h2>Calculator2</h2>
+<%= label_tag 'me1', 'Me1:' %>
+<%= select_tag 'me1', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me1' %>
+
+<%= label_tag 'me2', 'Me2:' %>
+<%= select_tag 'me2', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me2' %>
+
+<%= label_tag 'me3', 'Me3:' %>
+<%= select_tag 'me3', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me3' %>
+
+<%= label_tag 'me4', 'Me4:' %>
+<%= select_tag 'me4', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me4' %>
+<br>
+<%= label_tag 'enemy1', 'Enemy1:' %>
+<%= select_tag 'enemy1', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy1' %>
+
+<%= label_tag 'enemy2', 'Enemy2:' %>
+<%= select_tag 'enemy2', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy2' %>
+
+<%= label_tag 'enemy3', 'Enemy3:' %>
+<%= select_tag 'enemy3', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy3' %>
+
+<%= label_tag 'enemy4', 'Enemy4:' %>
+<%= select_tag 'enemy4', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy4' %>
+
+<%= label_tag 'enemy5', 'Enemy5:' %>
+<%= select_tag 'enemy5', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'enemy5' %>
+
+<button onclick="calculate2()">Calculate</button>
+
+<p id="result2"></p>

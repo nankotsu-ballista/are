@@ -1,0 +1,2 @@
+class Easycounter < ApplicationRecord
+end

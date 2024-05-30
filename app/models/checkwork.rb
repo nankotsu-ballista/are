@@ -1,0 +1,2 @@
+class Checkwork < ApplicationRecord
+end

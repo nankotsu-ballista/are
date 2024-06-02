@@ -8,8 +8,9 @@ class MetamonsController < ApplicationController
     @q = Metamon.ransack(params[:q])
   end
   def index
-    @metamonall = Metamon.all
     @q = Metamon.ransack(params[:q])
+    @metamonall = @q.result
+    @results = @q.result
   end
   def destroy
     @metamon = Metamon.find(params[:id])
@@ -39,6 +40,6 @@ class MetamonsController < ApplicationController
 
     def metamon_params
       params.require(:metamon).permit(:name, :setumei, :gamename,
-                                   :metaid)
+                                   :metaid, :image)
     end
 end

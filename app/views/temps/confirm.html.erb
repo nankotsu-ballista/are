@@ -1,16 +1,61 @@
 <style>
+  .link-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .link-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(50% - 20px);
+    height: 200px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+  }
+  .link-box a {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+  }
+  .search-form {
+    background-color: #666;
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .search-form label {
+    margin-right: 10px;
+  }
+  .search-form input[type="text"] {
+    border: none;
+    background-color: transparent;
+    flex-grow: 1;
+    border-radius: 15px;
+  }
   li {
-    text-align: left;
+    list-style-type: none;
   }
 </style>
+
 <li>
-<%= search_form_for @q do |f| %>
+<%= search_form_for @q, html: { class: 'search-form' } do |f| %>
   <%= f.label :name_cont %>
   <%= f.search_field :name_cont %>
-  <%= f.submit %>
+  <%= f.submit "Search" %>
 <% end %>
 
-<% @tempall.each do |temall| %>
-  <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id} %><br>
-<% end %>
+<div class="link-container">
+  <% @tempall.each do |temall| %>
+    <div class="link-box">
+      <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id} %>
+    </div>
+  <% end %>
+</div>
 </li>

@@ -1,6 +1,18 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+body {
+  font-family: 'M PLUS 1p', sans-serif;
+  font-weight: bold;
+}
+
+p, a ,h1{
+  font-family: 'M PLUS 1p', sans-serif;
+  font-weight: bold;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+}
 /* universal */
 
 body {
@@ -124,3 +136,7 @@ footer ul li {
 .dropdown-menu.active {
   display: block;
 }
+  body {
+    background-color: gray; /* 背景色をグレーに設定 */
+    color: rgb(8, 7, 7); /* テキスト色を白に設定 */
+  }

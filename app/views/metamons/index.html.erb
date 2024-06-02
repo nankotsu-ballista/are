@@ -1,15 +1,60 @@
+<style>
+  .link-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .link-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(50% - 20px); /* 画面の半分の大きさにします。20pxはmarginの分です */
+    height: 200px;
+    border: 1px solid black; /* 四角の枠線を表示します */
+    margin-bottom: 10px; /* 各四角の間隔を調整します */
+    margin-left: 10px;
+    margin-right: 10px;
+    background-size: contain; /* 背景画像を四角にフィットさせます */
+    background-position: center; /* 背景画像を中央に配置します */
+    position: relative; /* 子要素の位置を制御するために必要です */
+  }
+  .link-box a {
+    color: white; /* リンクの文字色を白にします */
+    font-size: 20px; /* リンクの文字サイズを大きくします */
+    position: absolute; /* 親要素（.link-box）の上に配置します */
+  }
+  .search-form {
+    background-color: #666; /* グレー色をもう少し濃くします */
+    border-radius: 25px; /* 角をなくして丸みを帯びた形にします */
+    padding: 10px; /* 内側の余白を追加します */
+    display: flex; /* ラベルと入力エリアを一行に並べます */
+    align-items: center; /* ラベルと入力エリアを中央揃えにします */
+  }
+  .search-form label {
+    margin-right: 10px; /* ラベルと入力エリアの間に余白を追加します */
+  }
+  .search-form input[type="text"] {
+    border: none; /* テキストボックスの枠線を消します */
+    background-color: transparent; /* テキストボックスの背景色を透明にします */
+    flex-grow: 1; /* 入力エリアを可能な限り広げます */
+    border-radius: 15px; /* 入力エリアの角を丸くします */
+  }
+  li {
+    list-style-type: none;
+  }
+</style>
 <h1>metamons</h1>
 
-<%= search_form_for @q do |f| %>
+<%= search_form_for @q, html: { class: 'search-form' } do |f| %>
   <%= f.label :name_cont %>
   <%= f.search_field :name_cont %>
-  <%= f.submit "Search" %>
+  <%= f.submit "検索" %>
 <% end %>
 
-<% @metamonall.each do |sap| %>
-id: <%= sap.id %><br>
-name:<%= link_to sap.name, {controller: "scores", action: "main", user_id: sap.user_id, metamon_id: sap.id} %>
-<% if sap.image.attached? %>
-    <%= image_tag sap.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
-<% end %>
-<%end%>
+<div class="link-container">
+  <% @metamonall.each do |sap| %>
+    <div class="link-box" style="<%= 'background-image: url(' + url_for(sap.image) + ');' if sap.image.attached? %>">
+      <%= link_to sap.name, {controller: "scores", action: "main", user_id: sap.user_id, metamon_id: sap.id} %>
+    </div>
+  <% end %>
+</div>

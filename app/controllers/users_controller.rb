@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def index
+    @q= User.ransack(params[:q])
+    @users = @q.result(distinct: true)
+  end
   def create
     @user = User.new(user_params)
     @user.metating =false
@@ -24,7 +28,8 @@ class UsersController < ApplicationController
     redirect_to tempedit_path
   end
   def confirm
-    @usercon = User.all
+    @q= User.ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
   def new
     @user = User.new

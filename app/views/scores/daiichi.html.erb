@@ -1,12 +1,28 @@
 <style>
-  .btn-custom {
-    font-size: 2em; /* フォントサイズを増やす */
-    padding: 80px 140px; /* パディングを増やす */
-    margin-right: 30px;
-    margin-left: 60px;
-  }
+.btn-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.btn-custom {
+  font-size: 2em;
+  padding: 10px 16px;
+  margin: 20px;
+  flex: 1 0 auto;
+  min-width: 300px;
+  background-color: white; /* ボタンの背景色を白に */
+  color: black; /* テキストの色を黒に */
+  border: none; /* ボタンの枠線を消す */
+}
 </style>
 
-<%= link_to "自分で一から作る", tesuto_path, class: "btn btn-lg btn-primary btn-custom" %>
-<%= link_to "テンプレートを使って作る", tempcon_path, class: "btn btn-lg btn-primary btn-custom" %>
-``
+<div class="btn-container">
+  <%= link_to tesuto_path, class: "btn btn-lg btn-primary btn-custom" do %>
+    自分でテンプレートから作る
+    <%= image_tag("登山アイコン4.png", class: "icon") %>
+  <% end %>
+  <%= link_to tempcon_path, class: "btn btn-lg btn-primary btn-custom" do %>
+    既存のテンプレートを使って作る
+    <%= image_tag("スパナのアイコン素材.png", class: "icon") %>
+  <% end %>
+</div>

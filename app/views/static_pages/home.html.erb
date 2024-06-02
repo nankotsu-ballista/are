@@ -1,16 +1,68 @@
-<style>
-  li, a ,h1{
-    text-align: left;
-  }
-</style>
-<h1>StaticPages#home</h1>
-<li><%= link_to "新規登録", signup_path, class: "btn btn-lg btn-primary" %>
-<%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>
-<%= link_to "ユーザーを探す", usercon_path, class: "btn btn-lg btn-primary" %>
-<br><br>
-<%= link_to "メタをつくる", daiichi_path, class: "btn btn-lg btn-primary" %>
-<%= link_to "メタを探す", metamonshow_path, class: "btn btn-lg btn-primary" %>
-<br><br>
-<%= link_to "テンプレートを探す", tempcon_path, class: "btn btn-lg btn-primary" %>
-<%= link_to "テンプレートを作る", tesuto_path, class: "btn btn-lg btn-primary" %>
-</li>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'M PLUS 1p', sans-serif;
+      font-weight: bold;
+    }
+
+    p, a ,h1{
+      font-family: 'M PLUS 1p', sans-serif;
+      font-weight: bold;
+    }
+    .btn-lg {
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.3333333;
+  background-color: white; /* ボタンの背景色を白に */
+  color: black; /* テキストの色を黒に */
+  margin-right: 10px; /* ボタン間の余白を追加 */
+  border: 10px solid #ccc; /* ボーダーを追加 */
+}
+
+.icon {
+  display: block;
+  margin: 0 auto;
+  width: 33%;
+}
+  </style>
+</head>
+<h1>無限の考え方<br>
+MYMETAへようこそ</h1>
+<p>MYMETAは、あなたのゲームピックに対する考え「メタ」を作成したり、他のユーザーの「メタ」を使ってゲームピックを有利に進めたりすることができる情報共有サイトです。<br>
+<point>
+<h1>Search</h1>
+<p>気になるゲームのメタはありませんか？</p>
+<br>
+<p>
+<%= link_to usercon_path, class: "btn btn-lg btn-primary" do %>
+  ユーザーを探す
+  <%= image_tag("人物の無料素材.png", class: "icon") %>
+<% end %>
+<%= link_to metamonshow_path, class: "btn btn-lg btn-primary" do %>
+  メタを探す
+  <%= image_tag("虫眼鏡のアイコン.png", class: "icon") %>
+<% end %>
+</p>
+<h1>Create</h1>
+<p>メタをつくってみましょう！</p>
+<p>
+<% if current_user %>
+  <%= link_to daiichi_path, class: "btn btn-lg btn-primary" do %>
+    メタを作る
+    <%= image_tag("スパナのアイコン素材.png", class: "icon") %>
+  <% end %>
+  <%= link_to tesuto_path, class: "btn btn-lg btn-primary" do %>
+    テンプレートを作る
+    <%= image_tag("登山アイコン4.png", class: "icon") %>
+  <% end %>
+<% else %>
+  <%= link_to login_path, class: "btn btn-lg btn-primary" do %>
+    メタを作る
+    <%= image_tag("スパナのアイコン素材.png", class: "icon") %>
+  <% end %>
+  <%= link_to login_path, class: "btn btn-lg btn-primary" do %>
+    テンプレートを作る
+    <%= image_tag("登山アイコン4.png", class: "icon") %>
+  <% end %>
+<% end %>
+</p>

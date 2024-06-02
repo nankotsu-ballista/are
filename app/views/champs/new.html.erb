@@ -1,4 +1,5 @@
-<h1>テンプレートを作ろう</h1>
+<h1>テンプレートを作成</h1>
+<h1>キャラクター</h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @champ, url: set_tempting_true_champs_path, method: :post) do |f| %>
@@ -8,7 +9,7 @@
       <%= f.label :image %>
       <%= f.file_field :image %>
 
-      <%= f.submit "Add new champ", class: "btn btn-primary" %>
+      <%= f.submit "新しいヒーローを追加", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
@@ -26,7 +27,7 @@
   <% end %>
 </div>
 
-
+<h1>Situation</h1>
 <%= form_with(model: @joukyou, url: joukyous_path) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
@@ -34,7 +35,7 @@
   <%= f.label :image %>
   <%= f.file_field :image %>
 
-  <%= f.submit "Add new jokyou", class: "btn btn-primary" %>
+  <%= f.submit "新しい状況を追加", class: "btn btn-primary" %>
 <% end %>
 
 
@@ -61,4 +62,4 @@
 
 
 
-<%= link_to "完成！",hontouroku_path%>
+<%= link_to "完成！", hontouroku_path, class: "btn btn-warning", style: "font-size: 1.2em; padding: 10px 20px;" %>

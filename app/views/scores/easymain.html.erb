@@ -1,7 +1,97 @@
 <style>
+  スタイル
+まずは以下、ベースとなるCSSを書いてください。
+
+/*まずはお決まりのボックスサイズ算出をborer-boxに */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 62.5%;/*rem算出をしやすくするために*/
+}
+
+.btn,
+a.btn,
+button.btn {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #212529;
+  border-radius: 0.5rem;
+}
+  /* 既存のスタイル */
   form, select, label {
     float: left;
   }
+  .image-display {
+    position: relative;
+  }
+  .image-display .name-and-count {
+    position: absolute;
+    color: white;
+    font-size: 24px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  /* 新しいスタイル */
+    .champ-text {
+    color: white;
+  }
+  .champ-text.large {
+    font-size: 30px;
+  }
+  .champ-text.medium {
+    font-size: 24px;
+  }
+  .champ-text.small {
+    font-size: 18px;
+  }
+
+  .champ-image.large {
+    width: 200px;
+    height: 200px;
+  }
+  .champ-image.medium {
+    width: 150px;
+    height: 150px;
+  }
+  .champ-image.small {
+    width: 100px;
+    height: 100px;
+  }
+  a.btn--yellow {
+  color: #000;
+  background-color: #fff100;
+  border-bottom: 5px solid #ccc100;
+}
+
+a.btn--yellow:hover {
+  margin-top: 3px;
+  color: #000;
+  background: # fff20a;
+  border-bottom: 2px solid #ccc100;
+}
 </style>
 
 <h1>PickRecommender</h1>
@@ -14,7 +104,6 @@
 <%= javascript_include_tag 'application' %>
 <%= include_gon %>
 <ul>
-
 <%= label_tag 'me1', 'Me1:' %>
 <%= select_tag 'me1', options_for_select(@sex2.map { |sex| [sex.name, sex.name] }), id: 'me1' %>
 
@@ -48,7 +137,7 @@
 <%= select_tag 'map', options_for_select(@situations.map { |situations| [situations.name, situations.name] }), id: 'map' %>
 
 
-<button onclick="displayChampImage()">Display Image</button>
+<a href="#" onclick="displayChampImage()" class="btn--yellow">最適なピックを表示する</a>
 
 <div id="imageContainer"></div>
 <div id="namesContainer"></div>
@@ -132,25 +221,34 @@ var sortedChamps = pairs.map(function(pair) {
 document.getElementById('imageContainer').innerHTML = '';
 
 // sortedChampsの各要素に対応する画像を作成して表示します。
-pairs.forEach(function(pair) {
-  var img = document.createElement('img');
-  img.src = '/champs/' + pair.champ + '/image';
-  img.width = 140;  // 幅を100pxに設定
-  img.height = 140; // 高さを100pxに設定
+pairs.forEach(function(pair, index) {
+    var img = document.createElement('img');
+    img.src = '/champs/' + pair.champ + '/image';
 
-  // 画像の横にpointとnameを表示します。
-  var text = document.createTextNode(' ' + pair.champ + ': ' + pair.point);
+    var text = document.createElement('span');
+    text.textContent = ' ' + pair.champ + ': ' + pair.point;
 
-  var div = document.createElement('div');
-  div.appendChild(img);
-  div.appendChild(text);
+    var sizeClass;
+    if (index === 0) {
+      sizeClass = 'large';
+    } else if (index === 1) {
+      sizeClass = 'medium';
+    } else {
+      sizeClass = 'small';
+    }
 
-  document.getElementById('imageContainer').appendChild(div);
+    img.className = 'champ-image ' + sizeClass;
+    text.className = 'champ-text ' + sizeClass;
 
-  // 画像の後に改行を追加します。
-  var br = document.createElement('br');
-  document.getElementById('imageContainer').appendChild(br);
-});
+    var div = document.createElement('div');
+    div.appendChild(img);
+    div.appendChild(text);
+
+    document.getElementById('imageContainer').appendChild(div);
+
+    var br = document.createElement('br');
+    document.getElementById('imageContainer').appendChild(br);
+  });
     //シチュエーションの処理  
     //matchCount = champs.indexOf(gon.synergy.enemy)
   matchCount = sortedChamps

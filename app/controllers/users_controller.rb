@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user.tempting=false
     @user.ifnewmeta=1
     @user.ifnewtemp=1
+    
     if @user.save
       reset_session
       log_in @user
@@ -20,7 +21,7 @@ class UsersController < ApplicationController
     end
   end
   def update_doing_temp
-    current_user.update_columns(doingtempid: params[:temp_id], doingtempuserid: params[:user_id])
+    current_user.update_columns(doingtempid: params[:temp_id], doingtempuserid: params[:user_id], metating: true)
     redirect_to which_path
   end
   def update_editing_temp

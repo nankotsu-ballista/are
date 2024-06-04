@@ -51,9 +51,16 @@ MYMETAへようこそ</h1>
     メタを作る
     <%= image_tag("スパナのアイコン素材.png", class: "icon") %>
   <% end %>
+  <% if current_user.tempting%>
   <%= link_to tesuto_path, class: "btn btn-lg btn-primary" do %>
+    テンプレートを作る(作成中)
+    <%= image_tag("登山アイコン4.png", class: "icon") %>
+    <% end %>
+    <% else %>
+    <%= link_to tesuto_path, class: "btn btn-lg btn-primary" do %>
     テンプレートを作る
     <%= image_tag("登山アイコン4.png", class: "icon") %>
+    <% end %>
   <% end %>
 <% else %>
   <%= link_to login_path, class: "btn btn-lg btn-primary" do %>

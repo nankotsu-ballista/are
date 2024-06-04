@@ -4,6 +4,11 @@ class JoukyousController < ApplicationController
   end
   def index
   end
+  def destroy
+    @champ = Joukyou.find(params[:id])
+    @champ.destroy
+    redirect_to tesuto_path, notice: "Score deleted successfully."
+  end
   def create
     @joukyou = Joukyou.new(joukyou_params)
     @joukyou.user_id = current_user.id

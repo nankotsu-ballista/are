@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   post '/update_or_create_situationdata', to: 'scores#update_or_create_situationdata'
   post '/update_or_create_kihondata', to: 'scores#update_or_create_kihondata'
   post "/login", to: "sessions#create"
+  post 'reset_temp', to: 'temps#reset_temp'
   resources :easyscores
   resources :scores
   resources :scoremaps

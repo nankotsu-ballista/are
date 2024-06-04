@@ -15,6 +15,13 @@ class TempsController < ApplicationController
   end
   def show
     @thetemp = Champ.where(user_id: params[:user_id], temp_id: params[:id])
+    @thejoukyou = Joukyou.where(user_id: params[:user_id], temp_id: params[:id])
+  end
+  def reset_temp
+    Champ.where(user_id: current_user.id, temp_id: current_user.ifnewtemp).destroy_all
+    Joukyou.where(user_id: current_user.id, temp_id: current_user.ifnewtemp).destroy_all
+    current_user.update_columns(tempting: false)
+    redirect_to root_path, notice: 'Temp has been reset.'
   end
   def create
     @newtemp=Temp.new(temp_params)

@@ -1,3 +1,7 @@
+<%if current_user.metating%>
+<h1>現在作成中のMetaがあります</h1>
+<%= link_to '作成中のMetaを編集する', scoeasy_path%>
+<%else%>
 <h1>Hero</h1>
 <% @thetemp.each do |sap| %>
 <%=sap.name%>
@@ -6,7 +10,14 @@
 <% end %>
 <%end%>
 <h1>Situation</h1>
+<% @thejoukyou.each do |sa| %>
+<%=sa.name%>
+<% if sa.image.attached? %>
+    <%= image_tag sa.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+<% end %>
+<%end%>
 <%= link_to 'これを使ってメタを作る', update_doing_temp_user_path(current_user, user_id: params[:user_id], temp_id: params[:id]) %>
 <% if current_user.id == params[:user_id].to_i %>
   <br><%= link_to 'テンプレートを編集する', update_editing_temp_user_path(current_user, user_id: params[:user_id], temp_id: params[:id]) %>
+<% end %>
 <% end %>

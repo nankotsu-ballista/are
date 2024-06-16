@@ -1,31 +1,92 @@
 <style>
-  li, a,h1 {
+  body {
+    font-family: 'M PLUS 1p', sans-serif;
+  }
+
+  .user-item {
+    border: none;
+    border: 3px solid #808080;
+    border-radius: 10px;
+  }
+  h1 {
     text-align: left;
   }
+
+  .user-image-or-name {
+    width: 100px;
+    height: 100px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+  }
+
+  .user-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    background-color: white;
+    border: 3px solid #808080;
+    border-radius: 10px;
+  }
+  .temp-link {
+    font-size: 40px;
+  }
+
+  .temp-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .temp-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: none;
+    background-color: white;
+    border: 3px solid #808080;
+    border-radius: 10px;
+  }
 </style>
-<h1><%= @user2.name %>  さんのページ</h1>
-<br><h1>userのメタ</h1>
+
+<h1>
+  <div class="user-item">
+    <div class="user-image-or-name">
+      <% if @user2.image.attached? %>
+        <%= image_tag @user2.image.variant(resize_to_fill: [100, 100]).processed, class: 'user-image' %>
+      <% else %>
+        <%= image_tag '人物の無料素材.png', class: 'user-image' %>
+      <% end %>
+    </div>
+    <%= @user2.name %> さんのページ
+  </div>
+</h1>
+<h1>テンプレート一覧</h1>
+<% @usertemp.each do |ra| %>
+  <li class="temp-item">
+    <% if ra.image.attached? %>
+      <%= image_tag ra.image.variant(resize_to_fill: [100, 100]).processed, class: "temp-image" %>
+    <% end %>
+    <%= link_to ra.name, tempshow_path(ra, user_id: @user2.id, id: ra.temp_id), class: "temp-link" %>
+    <% if current_user && current_user.id == @user2.id %>
+      <%= button_to "Delete", user_path(ra), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+    <% end %>
+  </li>
+  <hr>
+<% end %>
+<h1>メタ一覧</h1>
 <%@esa=@user2.metamons%>
 <% @esa.each do |de| %>
-    <li>
-      <%= link_to de.name, {controller: "scores", action: "easymain", usertemp_id: de.tempuser_id, user_id: de.user_id, metamon_id: de.truemetamonid} %><br>
-      説明:<br><%= de.setumei %><br>
-      ゲームの名前:<%= de.gamename %><br>
+    <li class="meta-item">
+      <%= link_to de.name, {controller: "scores", action: "easymain", usertemp_id: de.tempuser_id, user_id: de.user_id, metamon_id: de.truemetamonid} %>
+      説明:<br><%= de.setumei %>
+      ゲームの名前:<%= de.gamename %>
       <% if de.image.attached? %>
-       <%= image_tag de.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+       <%= image_tag de.image.variant(resize_to_fill: [100, 100]).processed, class: "meta-image" %>
       <% end %>  
       <% if current_user && current_user.id == @user2.id %><%= button_to "Delete", metamon_path(de), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %><% end %>
     </li>
-<% end %>
-<h1>userのテンプレート</h1>
-<% @usertemp.each do |ra| %>
-<li>
-id:<%= ra.id %><br>name:<%= link_to ra.name, tempshow_path(ra, user_id: @user2.id, id: ra.temp_id) %>
-<% if ra.image.attached? %>
-    <%= image_tag ra.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
-<% end %>
-<% if current_user && current_user.id == @user2.id %>
-  <%= button_to "Delete", user_path(ra), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
-<% end %>
-</li>
 <% end %>

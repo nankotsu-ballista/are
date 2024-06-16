@@ -1,50 +1,64 @@
 <style>
-  .link-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+
   .link-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: calc(50% - 20px);
-    height: 200px;
-    border: 1px solid black;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    background-size: contain;
-    background-position: center;
-    position: relative;
+    border-radius: 10px; /* 追加: 背景の角をなくします */
+    width: 100px; /* 画像の幅を指定します */
+    height: 100px; /* 画像の高さを指定します */
+    background-color: white; /* 背景色を白にします */
+    border: 1px solid #ddd; /* 枠線を灰色にします */
+    display: flex; /* 子要素を行方向に配置します */
+    align-items: center; /* 子要素を垂直方向に中央揃えにします */
+    justify-content: center; /* 子要素を水平方向に中央揃えにします */
   }
-  .link-box a {
-    color: white;
-    font-size: 20px;
-    position: absolute;
+  .link-box img {
+    border-radius: 10px;
+    object-fit: contain; /* 追加: 画像が枠内に収まるように調整します */
+    width: 100%; /* 追加: 画像の幅を100%に設定します */
+    height: 100%; /* 追加: 画像の高さを100%に設定します */
+  }
+  .default-image {
+    border-radius: 10px; /* 追加: 背景の角をなくします */
+    width: 100px; /* 画像の幅を指定します */
+    height: 100px; /* 画像の高さを指定します */
+    background-color: white; /* 背景色を白にします */
+    border: 1px solid #ddd; /* 枠線を灰色にします */
+    display: flex; /* 子要素を行方向に配置します */
+    align-items: center; /* 子要素を垂直方向に中央揃えにします */
+    justify-content: center; /* 子要素を水平方向に中央揃えにします */
+  }
+  .default-image img {
+    object-fit: contain; /* 追加: 画像が枠内に収まるように調整します */
+    width: 100%; /* 追加: 画像の幅を100%に設定します */
+    height: 100%; /* 追加: 画像の高さを100%に設定します */
   }
   .search-form {
-    background-color: #666;
-    border-radius: 25px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
+    background-color: #666; /* グレー色をもう少し濃くします */
+    border-radius: 25px; /* 角をなくして丸みを帯びた形にします */
+    padding: 10px; /* 内側の余白を追加します */
+    display: flex; /* ラベルと入力エリアを一行に並べます */
+    align-items: center; /* ラベルと入力エリアを中央揃えにします */
+  margin-bottom: 20px; /* 追加: 要素間に空白を追加します */
   }
   .search-form label {
-    margin-right: 10px;
+    margin-right: 10px; /* ラベルと入力エリアの間に余白を追加します */
   }
   .search-form input[type="text"] {
-    border: none;
-    background-color: transparent;
-    flex-grow: 1;
-    border-radius: 15px;
+    border: none; /* テキストボックスの枠線を消します */
+    background-color: transparent; /* テキストボックスの背景色を透明にします */
+    flex-grow: 1; /* 入力エリアを可能な限り広げます */
+    border-radius: 15px; /* 入力エリアの角を丸くします */
   }
   li {
     list-style-type: none;
   }
+  .link-name { /* 新しいクラスを定義します */
+    color: white;
+    font-size: 20px;
+    position: relative; /* 名前を絶対位置ではなく相対位置にします */
+  }
 </style>
 
-<li>
+
 <%= search_form_for @q, html: { class: 'search-form' } do |f| %>
   <%= f.label :name_cont %>
   <%= f.search_field :name_cont %>
@@ -54,8 +68,13 @@
 <div class="link-container">
   <% @tempall.each do |temall| %>
     <div class="link-box">
-      <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id} %>
+      <% if temall.image.attached? %>
+        <%= image_tag(url_for(temall.image), class: "icon") %>
+      <% else %>
+        <%= image_tag("登山のアイコン4.png", class: "icon") %>
+      <% end %>
+      <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id}, class: "link-name" %>    
     </div>
+    <hr>
   <% end %>
 </div>
-</li>

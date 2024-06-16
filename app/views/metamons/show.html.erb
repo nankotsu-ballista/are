@@ -1,27 +1,27 @@
 <style>
-  .link-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+
   .link-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: calc(50% - 20px); /* 画面の半分の大きさにします。20pxはmarginの分です */
-    height: 200px;
-    border: 1px solid black; /* 四角の枠線を表示します */
-    margin-bottom: 10px; /* 各四角の間隔を調整します */
-    margin-left: 10px;
-    margin-right: 10px;
-    background-size: contain; /* 背景画像を四角にフィットさせます */
-    background-position: center; /* 背景画像を中央に配置します */
-    position: relative; /* 子要素の位置を制御するために必要です */
+    display: flex; /* 追加: 子要素を行方向に配置します */
+    align-items: center; /* 追加: 子要素を垂直方向に中央揃えにします */
+    margin-bottom: 20px;
   }
-  .link-box a {
-    color: white; /* リンクの文字色を白にします */
-    font-size: 20px; /* リンクの文字サイズを大きくします */
-    position: absolute; /* 親要素（.link-box）の上に配置します */
+  .link-box img {
+    margin-right: 10px; /* 追加: 画像と名前の間に余白を追加します */
+  }
+  .default-image {
+    border-radius: 10px; /* 追加: 背景の角をなくします */
+    width: 100px; /* 画像の幅を指定します */
+    height: 100px; /* 画像の高さを指定します */
+    background-color: white; /* 背景色を白にします */
+    border: 1px solid #ddd; /* 枠線を灰色にします */
+    display: flex; /* 子要素を行方向に配置します */
+    align-items: center; /* 子要素を垂直方向に中央揃えにします */
+    justify-content: center; /* 子要素を水平方向に中央揃えにします */
+  }
+  .default-image img {
+    object-fit: contain; /* 追加: 画像が枠内に収まるように調整します */
+    width: 100%; /* 追加: 画像の幅を100%に設定します */
+    height: 100%; /* 追加: 画像の高さを100%に設定します */
   }
   .search-form {
     background-color: #666; /* グレー色をもう少し濃くします */
@@ -29,6 +29,7 @@
     padding: 10px; /* 内側の余白を追加します */
     display: flex; /* ラベルと入力エリアを一行に並べます */
     align-items: center; /* ラベルと入力エリアを中央揃えにします */
+  margin-bottom: 20px; /* 追加: 要素間に空白を追加します */
   }
   .search-form label {
     margin-right: 10px; /* ラベルと入力エリアの間に余白を追加します */
@@ -53,9 +54,16 @@
 
 <div class="link-container">
   <% @metamonall.each do |sap| %>
-    <div class="link-box" style="<%= 'background-image: url(' + url_for(sap.image) + ');' if sap.image.attached? %>">
+    <div class="link-box">
+      <% if sap.image.attached? %>
+        <%= image_tag(url_for(sap.image), class: "icon") %>
+      <% else %>
+        <div class="default-image">
+          <%= image_tag("本の無料アイコン素材2.png", class: "icon") %>
+        </div>
+      <% end %>
       <%= link_to sap.name, {controller: "scores", action: "easymain", usertemp_id: sap.tempuser_id, user_id: sap.user_id, metamon_id: sap.truemetamonid} %>
     </div>
+    <hr>
   <% end %>
 </div>
-</li>

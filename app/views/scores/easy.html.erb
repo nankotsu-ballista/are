@@ -6,7 +6,7 @@
       <%= image_tag champ.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
     <% end %>
   <% end %>
-<% end %>\
+<% end %>
 <h1>synergy</h1>
 <% @sewo.each do |champ| %>
   <%= champ.name %>
@@ -35,3 +35,4 @@
 <br>テンプレートのid
 <%=current_user.doingtempid%>
 <%= link_to "完成", metanew_path, class: "btn btn-lg btn-primary" %>
+<%= button_to "メタを完全に削除", reset_score_path, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>

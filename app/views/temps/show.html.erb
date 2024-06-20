@@ -1,6 +1,8 @@
 <%if current_user.metating%>
 <h1>現在作成中のMetaがあります</h1>
+作成中のMetaを削除するか、編集を完了してください<br>
 <%= link_to '作成中のMetaを編集する', scoeasy_path%>
+<%= link_to '作成中のMetaを完全に削除する', '#'%>
 <%else%>
 <h1>Hero</h1>
 <% @thetemp.each do |sap| %>

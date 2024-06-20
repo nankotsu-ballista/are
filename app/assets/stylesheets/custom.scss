@@ -4,14 +4,15 @@
 body {
   font-family: 'M PLUS 1p', sans-serif;
   font-weight: bold;
+  
+}
+header {
+  font-family: 'M PLUS 1p', sans-serif;
 }
 
 p, a ,h1{
   font-family: 'M PLUS 1p', sans-serif;
   font-weight: bold;
-}
-body {
-  font-family: 'Roboto', sans-serif;
 }
 /* universal */
 
@@ -41,6 +42,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  font-family: 'M PLUS 1p', sans-serif;
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
@@ -48,6 +50,7 @@ h1 {
 }
 
 h2 {
+  font-family: 'M PLUS 1p', sans-serif;
   font-size: 1.2em;
   letter-spacing: -1px;
   margin-bottom: 30px;
@@ -57,12 +60,14 @@ h2 {
 }
 
 p {
+  font-family: 'M PLUS 1p', sans-serif;
   font-size: 1.1em;
   line-height: 1.7em;
 }
 /* header */
 
 #logo {
+  font-family: 'M PLUS 1p', sans-serif;
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
@@ -137,6 +142,7 @@ footer ul li {
   display: block;
 }
   body {
-    background-color: gray; /* 背景色をグレーに設定 */
+    background-color: #808080;
+    ; /* 背景色をグレーに設定 */
     color: rgb(8, 7, 7); /* テキスト色を白に設定 */
   }

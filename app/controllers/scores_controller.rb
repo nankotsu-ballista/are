@@ -1,6 +1,15 @@
 class ScoresController < ApplicationController
   def show
   end
+
+  def reset_score
+    Easykihon.where(user_id: current_user.id, meta_id: current_user.ifnewmeta).destroy_all
+    Easycounter.where(user_id: current_user.id, meta_id: current_user.ifnewmeta).destroy_all
+    Easysynergy.where(user_id: current_user.id, meta_id: current_user.ifnewmeta).destroy_all
+    Easysituation.where(user_id: current_user.id, meta_id: current_user.ifnewmeta).destroy_all
+    current_user.update_columns(metating: false)
+    redirect_to root_path, notice: 'Meta has been reset.'
+  end
   def easykihon
     @special_situation = "kihon"
     @champs = Champ.where(user_id: current_user.doingtempuserid, temp_id: current_user.doingtempid)

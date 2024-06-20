@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get  "/signup",  to: "users#new"
   get  "/usershow",  to: "users#show"
   get  "/usercon",  to: "users#confirm"
+  get  "/kateindex",  to: "kategoris#index"
+  get  "/useredit",  to: "users#edit"
   get    "/login",   to: "sessions#new"
   get    "/templenew",   to: "templates#new"
   get    "/templesearch",   to: "templates#search"
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
   post '/update_or_create_kihondata', to: 'scores#update_or_create_kihondata'
   post "/login", to: "sessions#create"
   post 'reset_temp', to: 'temps#reset_temp'
+  post 'reset_score', to: 'scores#reset_score'
+  post '/hontouroku', to: 'kategoris#create'
   resources :easyscores
   resources :scores
   resources :scoremaps
@@ -47,6 +51,7 @@ Rails.application.routes.draw do
   resources :metamons
   resources :templates
   resources :joukyous
+  resources :kategoris
   resources :users do
     member do
       get :update_doing_temp

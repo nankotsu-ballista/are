@@ -33,6 +33,7 @@
   }
   .temp-link {
     font-size: 40px;
+    text-align: left;
   }
 
   .temp-item {
@@ -40,6 +41,13 @@
     flex-direction: row;
     align-items: center;
   }
+  .field {
+  text-align: left;
+  border-radius: 1px;
+}
+.actions {
+  text-align: left;
+}
 
   .temp-image {
     width: 100px;
@@ -51,7 +59,7 @@
     border-radius: 10px;
   }
 </style>
-
+<h1>ユーザー情報の編集</h1>
 <h1>
   <div class="user-item">
     <div class="user-image-or-name">
@@ -64,13 +72,46 @@
     <%= @user2.name %> さんのページ
   </div>
 </h1>
+
+<%= form_with(model: @user2, local: true) do |form| %>
+  <% if @user2.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user2.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user2.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :名前 %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ユーザー画像 %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
 <h1>テンプレート一覧</h1>
 <% @usertemp.each do |ra| %>
   <li class="temp-item">
     <% if ra.image.attached? %>
       <%= image_tag ra.image.variant(resize_to_fill: [100, 100]).processed, class: "temp-image" %>
     <% end %>
-    <%= link_to ra.name, tempshow_path(ra, user_id: @user2.id, id: ra.temp_id), class: "temp-link" %>
+    <div class="temp-link">
+      <%= ra.name %>
+    </div>
+    <% if current_user && current_user.id == @user2.id %>
+      <%= button_to "Delete", user_path(ra), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+    <% end %>
   </li>
   <hr>
 <% end %>
@@ -81,14 +122,17 @@
       
       <div class="user-image-or-name">
         <% if de.image.attached? %>
-          <%= image_tag de.image.variant(resize_to_fill: [100, 100]).processed, class: "temp-image" %>
+          <%= image_tag de.image.variant(resize_to_fill: [100, 100]).processed, class: "user-image" %>
         <% else %>
-          <%= image_tag '本の無料アイコン素材2.png', class: 'temp-image' %>
+          <%= image_tag '本の無料アイコン素材2.png', class: 'user-image' %>
         <% end %>
       </div>
       <div class="temp-link">
-      <%= link_to de.name, {controller: "scores", action: "easymain", usertemp_id: de.tempuser_id, user_id: de.user_id, metamon_id: de.truemetamonid} %>
+      <%= de.name %>
       </div><%= de.setumei %>
       ゲームの名前:<%= de.gamename %>
-    </li>
+      <% if current_user && current_user.id == @user2.id %>
+      <%= button_to "Delete", metamon_path(de), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+    <% end %>
+  </li>
 <% end %>

@@ -90,13 +90,13 @@
   <%= f.search_field :name_cont %>
   <%= f.submit "検索" %>
 <% end %>
-<% @users.each do |scoret| %>
+<% @tempall.each do |scoret| %>
   <div class="user-item">
     <div class="user-image-or-name">
       <% if scoret.image.present? %>
         <%= image_tag scoret.image, class: 'user-image' %>
       <% else %>
-        <%= image_tag '人物の無料素材.png', class: 'user-image' %>
+        <%= image_tag 'ゲームの素材.png', class: 'user-image' %>
       <% end %>
     </div>
     <%= link_to scoret.name, scoret %>

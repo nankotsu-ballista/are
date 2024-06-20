@@ -1,7 +1,7 @@
 class TempsController < ApplicationController
   def index
     @q = Temp.ransack(params[:q])
-    @temps = @q.result(distinct: true)
+    @tempall = @q.result(distinct: true)
   end
   def confirm
     @q = Temp.ransack(params[:q])
@@ -27,6 +27,7 @@ class TempsController < ApplicationController
     @newtemp=Temp.new(temp_params)
     @newtemp.user_id = current_user.id
     @newtemp.temp_id = current_user.ifnewtemp
+    
     if @newtemp.save
       current_user.increment!(:ifnewtemp)
     else
@@ -53,6 +54,6 @@ class TempsController < ApplicationController
   private
 
     def temp_params
-      params.require(:temp).permit(:name, :image)
+      params.require(:temp).permit(:name, :image, :kategori_id)
     end
 end

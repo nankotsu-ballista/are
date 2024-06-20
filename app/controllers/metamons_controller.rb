@@ -3,6 +3,9 @@ class MetamonsController < ApplicationController
     @metamon = Metamon.new
     @metamol = current_user.metamons
   end
+  def edit
+    @metaedit = Temp.where(user_id: current_user.id, meta_id: current_user.editingtempid).first
+  end
   def show
     @metamonall = Metamon.all
     @q = Metamon.ransack(params[:q])

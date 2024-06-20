@@ -46,6 +46,12 @@ class UsersController < ApplicationController
     @metamon2 = @user2.metamons
     @usertemp=@user2.temps
   end
+  def edit
+    @user = User.all
+    @user2 =  User.find(params[:id])
+    @metamon2 = @user2.metamons
+    @usertemp=@user2.temps
+  end
   def set_tempting_false
     current_user.update_attribute(:tempting,false)
     redirect_to current_user
@@ -59,6 +65,11 @@ class UsersController < ApplicationController
         
       end
     end
+    def update
+      @user2=current_user
+      @user2.update(useredit_params)
+      redirect_to useredit_path
+    end
   private
       def temp_params
         params.require(:temp).permit(:name, :image)
@@ -66,5 +77,9 @@ class UsersController < ApplicationController
       def user_params
         params.require(:user).permit(:name, :email, :password,
                                      :password_confirmation)
-      end  
+      end
+      def useredit_params
+        params.require(:user).permit(:name, :image)
+      end
+        
 end

@@ -1,5 +1,41 @@
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
   <style>
+    .metamon-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 0; /* 背景の角を消す */
+}
+
+.metamon-item {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px; /* 要素の角を丸くする */
+  overflow: hidden; /* 子要素の角を丸くする */
+}
+
+.metamon-image {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.metamon-link {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+}
+
+.metamon-name {
+  color: white;
+}
     body {
       font-family: 'M PLUS 1p', sans-serif;
       font-weight: bold;
@@ -24,13 +60,42 @@
   margin: 0 auto;
   width: 33%;
 }
+
   </style>
 </head>
 <h1>無限の考え方<br>
 MYMETAへようこそ</h1>
 <p>MYMETAは、あなたのゲームピックに対する考え「メタ」を作成したり、他のユーザーの「メタ」を使ってゲームピックを有利に進めたりすることができる情報共有サイトです。<br>
-<point>
-<h1>Search</h1>
+<h1>最新のメタ</h1>
+<div class="metamon-container">
+  <% @latemetamons.each do |metamon| %>
+    <div class="metamon-item">
+      <% if metamon.image.attached? %>
+        <%= image_tag metamon.image.variant(resize_to_fill: [100, 100]).processed, class: 'metamon-image' %>
+      <% else %>
+        <%= image_tag '本の無料アイコン素材2.png', size: '100x100', class: 'metamon-image' %>
+      <% end %>
+      <div class="metamon-link">
+        <%= link_to metamon.name, {controller: "scores", action: "easymain", usertemp_id: metamon.tempuser_id, user_id: metamon.user_id, metamon_id: metamon.truemetamonid}, class: 'metamon-name' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<h1>探す</h1>
+<div class="metamon-container">
+  <% @kategoritachi.each do |metamon| %>
+    <div class="metamon-item">
+      <% if metamon.image.attached? %>
+        <%= image_tag metamon.image.variant(resize_to_fill: [100, 100]).processed, class: 'metamon-image' %>
+      <% else %>
+        <%= image_tag 'ゲームの素材.png', size: '100x100', class: 'metamon-image' %>
+      <% end %>
+      <div class="metamon-link">
+        <%= link_to metamon.name, class: 'metamon-name' %>
+      </div>
+    </div>
+  <% end %>
+</div>
 <p>気になるゲームのメタはありませんか？</p>
 <br>
 <p>
@@ -38,13 +103,16 @@ MYMETAへようこそ</h1>
   ユーザーを探す
   <%= image_tag("人物の無料素材.png", class: "icon") %>
 <% end %>
+<%= link_to kateindex_path, class: "btn btn-lg btn-primary" do %>
+  ゲームを探す
+  <%= image_tag("ゲームの素材.png", class: "icon") %>
+<% end %>
 <%= link_to metamonshow_path, class: "btn btn-lg btn-primary" do %>
   メタを探す
   <%= image_tag("虫眼鏡のアイコン.png", class: "icon") %>
 <% end %>
 </p>
-<h1>Create</h1>
-<p>メタをつくってみましょう！</p>
+<h1>作る</h1>
 <p>
 <% if current_user %>
   <%= link_to daiichi_path, class: "btn btn-lg btn-primary" do %>

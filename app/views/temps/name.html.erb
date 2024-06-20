@@ -4,13 +4,29 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @newtemp, url: set_tempting_false_users_path, method: :post) do |f| %>
-      <%= f.label :name %>
+      <%= f.label :名前 %>
       <%= f.text_field :name %>
 
-      <%= f.label :image %>
+      <%= f.label :画像 %>
       <%= f.file_field :image %>
+
+      <%= f.label :ゲームカテゴリー %>
+      <%= f.collection_select :kategori_id, Kategori.all, :id, :name, prompt: "Select a Kategori" %>
+
+      
 
       <%= f.submit "登録", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
+ゲームがありませんか？
+カテゴリーを追加
+<%= form_with(model: @kategori, url: hontouroku_path, local: true) do |f| %>
+  <%= f.label :名前 %>
+  <%= f.text_field :name, name: 'kategori[name]' %>
+
+  <%= f.label :画像 %>
+  <%= f.file_field :image, name: 'kategori[image]' %>
+
+  <%= f.submit "カテゴリーを追加", class: "btn btn-primary" %>
+<% end %>

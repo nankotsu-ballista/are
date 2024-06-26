@@ -7,9 +7,18 @@ class KategorisController < ApplicationController
     @q = Kategori.ransack(params[:q])
     @tempall = @q.result(distinct: true)
   end
+  def metatemp
+    @metamons = Metamon.where(kategori_id: params[:id])
+    @Temps = Temp.where(kategori_id: params[:id])
+    # @thekate=Kategori(id: params[:id])
+    @thekate=Kategori.find_by(id: params[:id])
+  end
 
   def show
-    # Your code for handling the show action goes here
+    @metamons = Metamon.where(kategori_id: params[:id])
+    @temps = Temp.where(kategori_id: params[:id])
+    # @thekate=Kategori(id: params[:id])
+    @thekate=Kategori.find_by(id: params[:id])
   end
 
   def new

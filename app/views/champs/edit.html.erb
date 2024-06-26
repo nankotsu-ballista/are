@@ -9,6 +9,7 @@
       <%= f.file_field :image %>
 
       <%= f.submit "Add new champ", class: "btn btn-primary" %>
+      <%= button_to "Edit", tempedit_path, method: :get, class: "btn btn-primary", style: "flex-shrink: 0; margin-left: 10px;" %>
     <% end %>
   </div>
 </div>

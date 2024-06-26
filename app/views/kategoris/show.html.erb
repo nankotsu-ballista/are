@@ -51,24 +51,19 @@
     list-style-type: none;
   }
 </style>
-
-<li>
-<%= search_form_for @q, html: { class: 'search-form' } do |f| %>
-  <%= f.search_field :name_cont %>
-  <%= f.submit "テンプレートを検索" %>
-<% end %>
-
+<% @metamons%>
+<h1>メタ一覧</h1>
 <div class="link-container">
-  <% @tempall.each do |temall| %>
+  <% @metamons.each do |sap| %>
     <div class="link-box">
-      <% if temall.image.attached? %>
-        <%= image_tag(url_for(temall.image), class: "icon") %>
+      <% if sap.image.attached? %>
+        <%= image_tag(url_for(sap.image), class: "icon") %>
       <% else %>
-      <div class="default-image">
-        <%= image_tag("登山アイコン4.png", class: "icon") %>
-      </div>
+        <div class="default-image">
+          <%= image_tag("本の無料アイコン素材2.png", class: "icon") %>
+        </div>
       <% end %>
-      <%= link_to temall.name, {controller: "temps", action: "show", user_id: temall.user_id, id: temall.temp_id} %>    
+      <div class="dekamoji"><%= link_to sap.name, {controller: "scores", action: "easymain", usertemp_id: sap.tempuser_id, user_id: sap.user_id, metamon_id: sap.truemetamonid} %></div><p><%=sap.setumei%></p>
     </div>
     <hr>
   <% end %>

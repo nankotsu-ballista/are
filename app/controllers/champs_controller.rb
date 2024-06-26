@@ -11,6 +11,12 @@ class ChampsController < ApplicationController
     @champl = Champ.where(temp_id: current_user.editingtempid, user_id: current_user.id)
     @joukyoul = Joukyou.where(temp_id: current_user.editingtempid, user_id: current_user.id)
   end
+  def edit_temp
+    temp_id = params[:temp_id]
+    current_user.update_columns(editting: true)
+    current_user.update_columns(editingtempid: temp_id)
+    redirect_to tempedit_path
+  end
 
   def set_tempting_true
     current_user.update_columns(tempting: true)

@@ -4,7 +4,7 @@ class MetamonsController < ApplicationController
     @metamol = current_user.metamons
   end
   def edit
-    @metaedit = Temp.where(user_id: current_user.id, meta_id: current_user.editingtempid).first
+    @metaedy = Metamon.where(user_id: current_user.id, truemetamonid: current_user.editingmetaid).first
   end
   def show
     @metamonall = Metamon.all
@@ -20,6 +20,20 @@ class MetamonsController < ApplicationController
     @metamon.destroy
     redirect_to usershow_path, notice: "Metamon deleted successfully."
   end
+  # app/controllers/metamons_controller.rb
+def update
+  @metaedy = Metamon.where(user_id: current_user.id, truemetamonid: current_user.editingmetaid).first
+  if @metaedy.update(metamon_params)
+    redirect_to @metaedy, notice: 'Meta was successfully updated.'
+  else
+    render :edit
+  end
+end
+
+private
+  def metamon_params
+    params.require(:metamon).permit(:gamename, :image)
+  end
 
   
 
@@ -27,7 +41,9 @@ class MetamonsController < ApplicationController
     @metamon = current_user.metamons.build(metamon_params)
     @metamon.user_id = current_user.id
     @metamon.temp_id = current_user.doingtempid
+    tempkate = Temp.where(user_id: current_user.id, temp_id: current_user.doingtempid).first
     @metamon.tempuser_id = current_user.doingtempuserid
+    @metamon.kategori_id = tempkate.kategori_id
     @metamon.truemetamonid=current_user.ifnewmeta
     if @metamon.save
       current_user.increment(:ifnewmeta)

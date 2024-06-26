@@ -23,8 +23,8 @@
   }
 
   .user-image {
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border: none;
     background-color: white;
@@ -105,12 +105,16 @@
   <li class="temp-item">
     <% if ra.image.attached? %>
       <%= image_tag ra.image.variant(resize_to_fill: [100, 100]).processed, class: "temp-image" %>
+      <% else %>
+        <%= image_tag '登山アイコン4.png', class: 'user-image' %>
+      
     <% end %>
     <div class="temp-link">
       <%= ra.name %>
     </div>
     <% if current_user && current_user.id == @user2.id %>
       <%= button_to "Delete", user_path(ra), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+      <%= button_to "Edit", edit_temp_path(temp_id: ra.temp_id), method: :get, class: "btn btn-primary", style: "flex-shrink: 0; margin-left: 10px;" %>
     <% end %>
   </li>
   <hr>
@@ -133,6 +137,7 @@
       ゲームの名前:<%= de.gamename %>
       <% if current_user && current_user.id == @user2.id %>
       <%= button_to "Delete", metamon_path(de), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "flex-shrink: 0; margin-left: 0px;" %>
+    <%= button_to "Edit", edit_initiate_path(truemetamonid: de.truemetamonid), method: :get, class: "btn btn-primary", style: "flex-shrink: 0; margin-left: 10px;" %>
     <% end %>
   </li>
 <% end %>

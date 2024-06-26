@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_20_134455) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_26_020558) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -179,6 +179,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_20_134455) do
     t.integer "metamonid"
     t.integer "tempuser_id"
     t.integer "truemetamonid"
+    t.integer "kategori_id"
   end
 
   create_table "score_maps", force: :cascade do |t|
@@ -239,6 +240,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_20_134455) do
     t.integer "editingtempid"
     t.integer "editingmetaid"
     t.boolean "editting"
+    t.integer "editing_meta_temp_id"
+    t.integer "editing_meta_temp_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

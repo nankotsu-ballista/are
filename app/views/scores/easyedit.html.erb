@@ -1,0 +1,30 @@
+<h1>Counter</h1>
+<% @sewo.each do |champ| %>
+  <%= champ.name %>
+  <% if champ.image.attached? %>
+    <%= link_to easyscoreedit_path(champ) do %>
+      <%= image_tag champ.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+    <% end %>
+  <% end %>
+<% end %>
+<h1>synergy</h1>
+<% @sewo.each do |champ| %>
+  <%= champ.name %>
+  <% if champ.image.attached? %>
+    <%= link_to easysynergyedit_path(champ) do %>
+      <%= image_tag champ.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+    <% end %>
+  <% end %>
+<% end %>
+<h1>situation</h1>
+<% @situation.each do |champ| %>
+  <%= champ.name %>
+  <% if champ.image.attached? %>
+    <%= link_to easysituationedit_path(champ) do %>
+      <%= image_tag champ.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
+    <% end %>
+  <% end %>
+<% end %>
+<h1>Base</h1>
+<%= link_to "ベースを決める", easykihonedit_path, class: "btn btn-lg btn-primary" %>
+<%= link_to "名前を変更する", metaedit_path, class: "btn btn-lg btn-primary" %>

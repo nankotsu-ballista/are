@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     end
   private
       def temp_params
-        params.require(:temp).permit(:name, :image)
+        params.require(:temp).permit(:name, :image,:kategori_id)
       end
       def user_params
         params.require(:user).permit(:name, :email, :password,

@@ -1,6 +1,17 @@
 class ScoresController < ApplicationController
   def show
   end
+  def edit_initiate
+    meta_id = params[:truemetamonid]
+    themeta=Metamon.where(user_id: current_user.id, truemetamonid:meta_id).first
+    current_user.update_columns(editting: true)
+    current_user.update_columns(editingmetaid: meta_id)
+    current_user.update_columns(editing_meta_temp_id: themeta.temp_id)
+    current_user.update_columns(editing_meta_temp_user_id: themeta.tempuser_id)
+    redirect_to easyedit_path
+  end
+  
+  
 
   def reset_score
     Easykihon.where(user_id: current_user.id, meta_id: current_user.ifnewmeta).destroy_all
@@ -22,12 +33,41 @@ class ScoresController < ApplicationController
       end
     end
   end
+
+  def easykihonedit
+    @special_situation = "kihon"
+    @champs = Champ.where(user_id: current_user.editing_meta_temp_user_id, temp_id: current_user.editing_meta_temp_id)
+    @easykihons = Easykihon.where(name1: @special_situation, user_id: current_user.id, meta_id: current_user.editingmetaid)  
+    @positions = @easykihons.each_with_object({}) do |easykihon, positions|
+      @champs.each do |champ|
+        if easykihon.name2 == champ.name
+          positions[champ.name] = { x: easykihon.x, y: easykihon.y }
+        end
+      end
+    end
+  end
+  
   def easysituation
     @special_situation = Joukyou.find(params[:format])
     @situation = Joukyou.where(user_id:current_user.doingtempuserid , temp_id:current_user.doingtempid )
     @champs = Champ.where(user_id: current_user.doingtempuserid, temp_id: current_user.doingtempid)
 
     @easysituations = Easysituation.where(name1: @special_situation.name, user_id: current_user.id, meta_id: current_user.ifnewmeta)
+
+    @positions = @easysituations.each_with_object({}) do |easysituation, positions|
+      @champs.each do |champ|
+        if easysituation.name2 == champ.name
+          positions[champ.name] = { x: easysituation.x, y: easysituation.y }
+        end
+      end
+    end
+  end
+  def easysituationedit
+    @special_situation = Joukyou.find(params[:format])
+    @situation = Joukyou.where(user_id:current_user.editing_meta_temp_user_id , temp_id:current_user.editing_meta_temp_id)
+    @champs = Champ.where(user_id: current_user.editing_meta_temp_user_id, temp_id: current_user.editing_meta_temp_id)
+
+    @easysituations = Easysituation.where(name1: @special_situation.name, user_id: current_user.id, meta_id: current_user.editingmetaid)
 
     @positions = @easysituations.each_with_object({}) do |easysituation, positions|
       @champs.each do |champ|
@@ -51,6 +91,20 @@ class ScoresController < ApplicationController
     end
   end
   end
+  def easyscoreedit
+    @special_champ = Champ.find(params[:format])
+    @other_champs = Champ.where(user_id: current_user.editing_meta_temp_user_id, temp_id: current_user.editing_meta_temp_id).where.not(id: @special_champ.id)
+
+    @easycounters = Easycounter.where(name1: @special_champ.name, user_id: current_user.id, meta_id: current_user.editingmetaid)
+
+    @positions = @easycounters.each_with_object({}) do |easycounter, positions|
+    @other_champs.each do |other_champ|
+      if easycounter.name2 == other_champ.name
+        positions[other_champ.name] = { x: easycounter.x, y: easycounter.y }
+      end
+    end
+  end
+  end
   def easysynergy
     @special_champ = Champ.find(params[:format])
     @other_champs = Champ.where(user_id: current_user.doingtempuserid, temp_id: current_user.doingtempid).where.not(id: @special_champ.id)
@@ -65,7 +119,20 @@ class ScoresController < ApplicationController
     end
   end
   end
-  
+  def easysynergyedit
+    @special_champ = Champ.find(params[:format])
+    @other_champs = Champ.where(user_id: current_user.doingtempuserid, temp_id: current_user.doingtempid).where.not(id: @special_champ.id)
+
+    @easysynergys = Easysynergy.where(name1: @special_champ.name, user_id: current_user.id, meta_id: current_user.editingmetaid)
+
+    @positions = @easysynergys.each_with_object({}) do |easysynergy, positions|
+    @other_champs.each do |other_champ|
+      if easysynergy.name2 == other_champ.name
+        positions[other_champ.name] = { x: easysynergy.x, y: easysynergy.y }
+      end
+    end
+  end
+  end
   def destroy
     @score = Score.find(params[:id])
     @score.destroy
@@ -130,6 +197,30 @@ class ScoresController < ApplicationController
     easykihon = Easykihon.find_by(name2: params[:name2], user_id: user_id, meta_id: meta_id)
     render json: { x: easykihon.x, y: easykihon.y }
   end
+  def get_positionedit
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+    easycounter = Easycounter.find_by(name1: params[:name1], name2: params[:name2], user_id: user_id, meta_id: meta_id)
+    render json: { x: easycounter.x, y: easycounter.y }
+  end
+  def get_synergypositionedit
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+    easysynergy = Easysynergy.find_by(name1: params[:name1], name2: params[:name2], user_id: user_id, meta_id: meta_id)
+    render json: { x: easysynergy.x, y: easysynergy.y }
+  end
+  def get_situationpositionedit
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+    easysituation = Easysituation.find_by(name1: params[:name1], name2: params[:name2], user_id: user_id, meta_id: meta_id)
+    render json: { x: easysituation.x, y: easysituation.y }
+  end
+  def get_kihonpositionedit
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+    easykihon = Easykihon.find_by(name2: params[:name2], user_id: user_id, meta_id: meta_id)
+    render json: { x: easykihon.x, y: easykihon.y }
+  end
   def update_or_create_data
     # パラメータを取得
     name1 = params[:name1]
@@ -179,6 +270,55 @@ class ScoresController < ApplicationController
   
     render json: { status: 'success' }
   end
+  def update_or_create_dataedit
+    # パラメータを取得
+    name1 = params[:name1]
+    name2 = params[:name2]
+    x = params[:x].to_f 
+    y = params[:y].to_f # y座標を取得し、浮動小数点数に変換
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+  
+    # モデルのインスタンスを取得または作成し、データベースを更新
+    your_model = Easycounter.find_or_initialize_by(name1: name1, name2: name2, user_id: user_id, meta_id: meta_id)
+    your_model.update(x: x, y: y)
+    your_model = Easycounter.find_or_initialize_by(name1: name2, name2: name1, user_id: user_id, meta_id: meta_id)
+    your_model.update(x: -x, y: y)
+  
+    render json: { status: 'success' }
+  end
+  def update_or_create_synergydataedit
+    # パラメータを取得
+    name1 = params[:name1]
+    name2 = params[:name2]
+    x = params[:x].to_f 
+    y = params[:y].to_f # y座標を取得し、浮動小数点数に変換
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+  
+    # モデルのインスタンスを取得または作成し、データベースを更新
+    your_model = Easysynergy.find_or_initialize_by(name1: name1, name2: name2, user_id: user_id, meta_id: meta_id)
+    your_model.update(x: x, y: y)
+    your_model2 = Easysynergy.find_or_initialize_by(name1: name2, name2: name1, user_id: user_id, meta_id: meta_id)
+    your_model2.update(x: x, y: y)
+  
+    render json: { status: 'success' }
+  end
+  def update_or_create_situationdataedit
+    # パラメータを取得
+    name1 = params[:name1]
+    name2 = params[:name2]
+    x = params[:x].to_f 
+    y = params[:y].to_f # y座標を取得し、浮動小数点数に変換
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
+  
+    # モデルのインスタンスを取得または作成し、データベースを更新
+    your_model = Easysituation.find_or_initialize_by(name1: name1, name2: name2, user_id: user_id, meta_id: meta_id)
+    your_model.update(x: x, y: y)
+  
+    render json: { status: 'success' }
+  end
   def update_or_create_kihondata
     # パラメータを取得
     name1 = params[:name1]
@@ -187,6 +327,21 @@ class ScoresController < ApplicationController
     y = params[:y].to_f # y座標を取得し、浮動小数点数に変換
     user_id = current_user.id
     meta_id = current_user.ifnewmeta
+  
+    # モデルのインスタンスを取得または作成し、データベースを更新
+    your_model = Easykihon.find_or_initialize_by(name1: name1, name2: name2, user_id: user_id, meta_id: meta_id)
+    your_model.update(x: x, y: y)
+  
+    render json: { status: 'success' }
+  end
+  def update_or_create_kihondataedit
+    # パラメータを取得
+    name1 = params[:name1]
+    name2 = params[:name2]
+    x = params[:x].to_f 
+    y = params[:y].to_f # y座標を取得し、浮動小数点数に変換
+    user_id = current_user.id
+    meta_id = current_user.editingmetaid
   
     # モデルのインスタンスを取得または作成し、データベースを更新
     your_model = Easykihon.find_or_initialize_by(name1: name1, name2: name2, user_id: user_id, meta_id: meta_id)
@@ -229,6 +384,12 @@ class ScoresController < ApplicationController
     @score.metamon_id = current_user.ifnewmeta
     @userdoing=current_user.doingtempid
     @userdoingtemp=current_user.doingtempuserid
+  end
+  def easyedit
+    @situation = Joukyou.where(user_id:current_user.editing_meta_temp_user_id , temp_id:current_user.editing_meta_temp_id )
+    @sewo=Champ.where(user_id:current_user.editing_meta_temp_user_id , temp_id:current_user.editing_meta_temp_id )
+    @userdoing=current_user.editing_meta_temp_id
+    @userdoingtemp=current_user.editing_meta_temp_user_id
   end
   def create
 

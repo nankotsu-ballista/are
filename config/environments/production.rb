@@ -88,6 +88,7 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
   config.hosts << 'www.mym3ta.com'
+  config.hosts << 'are-wajb.onrender.com'
   
 
   # Do not dump schema after migrations.

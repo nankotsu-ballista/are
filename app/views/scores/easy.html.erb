@@ -27,12 +27,12 @@
 <% end %>
 <h1>Base</h1>
 <%= link_to "ベースを決める", easykihon_path, class: "btn btn-lg btn-primary" %>
-
+<!--
 <br>新しく作った時のmetaのid
 <%=current_user.ifnewmeta %>
 <br>現在メタを作ってる時のテンプレートユーザー
 <%=current_user.doingtempuserid %>
 <br>テンプレートのid
-<%=current_user.doingtempid%>
+<%=current_user.doingtempid%>--> 
 <%= link_to "完成", metanew_path, class: "btn btn-lg btn-primary" %>
 <%= button_to "メタを完全に削除", reset_score_path, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>

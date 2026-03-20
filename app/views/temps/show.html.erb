@@ -2,16 +2,16 @@
 <h1>現在作成中のMetaがあります</h1>
 作成中のMetaを削除するか、編集を完了してください<br>
 <%= link_to '作成中のMetaを編集する', scoeasy_path%>
-<%= link_to '作成中のMetaを完全に削除する', '#'%>
+<!--<%= link_to '作成中のMetaを完全に削除する', '#'%>--> 
 <%else%>
-<h1>Hero</h1>
+<h1>キャラクター</h1>
 <% @thetemp.each do |sap| %>
 <%=sap.name%>
 <% if sap.image.attached? %>
     <%= image_tag sap.image.variant(resize_to_fill: [100, 100]).processed, class: "mr-3" %>
 <% end %>
 <%end%>
-<h1>Situation</h1>
+<h1>状況</h1>
 <% @thejoukyou.each do |sa| %>
 <%=sa.name%>
 <% if sa.image.attached? %>

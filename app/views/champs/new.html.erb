@@ -9,7 +9,7 @@
       <%= f.label :image %>
       <%= f.file_field :image %>
 
-      <%= f.submit "新しいヒーローを追加", class: "btn btn-primary" %>
+      <%= f.submit "新しいキャラクターを追加", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
@@ -27,7 +27,7 @@
   <% end %>
 </div>
 
-<h1>Situation</h1>
+<h1>状況</h1>
 <%= form_with(model: @joukyou, url: joukyous_path) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>

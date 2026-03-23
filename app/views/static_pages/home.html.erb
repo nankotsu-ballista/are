@@ -81,20 +81,20 @@
   <% end %>
 </div>
 <h1>探す</h1>
-<div class="metamon-container">
+<%# <div class="metamon-container">
   <% @kategoritachi.each do |metamon| %>
-    <div class="metamon-item">
+    <%# <div class="metamon-item">
       <% if metamon.image.attached? %>
-        <%= image_tag metamon.image.variant(resize_to_fill: [100, 100]).processed, class: 'metamon-image' %>
-      <% else %>
-        <%= image_tag 'ゲームの素材.png', size: '100x100', class: 'metamon-image' %>
-      <% end %>
-      <div class="metamon-link">
+        <%# <%= image_tag metamon.image.variant(resize_to_fill: [100, 100]).processed, class: 'metamon-image' %>
+      <%# <% else %>
+        <%# <%= image_tag 'ゲームの素材.png', size: '100x100', class: 'metamon-image' %>
+      <%# <% end %>
+      <%# <div class="metamon-link">
         <%= link_to metamon.name, class: 'metamon-name' %>
-      </div>
-    </div>
-  <% end %>
-</div>
+      <%# </div> %>
+    <%# </div> %>
+  <%# <% end %>
+<%# </div> %>
 <p>気になるゲームのメタはありませんか？</p>
 <br>
 <p>

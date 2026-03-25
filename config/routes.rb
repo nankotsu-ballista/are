@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get  "/signup",  to: "users#new"
   get  "/usershow",  to: "users#show"
   get  "/usercon",  to: "users#confirm"
+  get "/how_to_use", to: "static_pages#how_to_use"
   get  "/kateindex",  to: "kategoris#index"
   get  "/useredit",  to: "users#edit"
   get    "/login",   to: "sessions#new"

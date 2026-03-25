@@ -66,6 +66,9 @@
 <h1>MY META</h1>
 <p>MYMETAは、ゲームピックに対する考え「メタ」を作成したり、他のユーザーの「メタ」を使ってゲームピックを有利に進めたりすることができる情報共有サイトです。<br>
 <h1>最新のメタ</h1>
+<p class="mt-3">
+  <%= link_to "使い方", "/how_to_use.pdf", target: "_blank", rel: "noopener", class: "btn btn-primary" %>
+</p>
 <div class="metamon-container">
   <% @latemetamons.each do |metamon| %>
     <div class="metamon-item">

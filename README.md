@@ -1,7 +1,7 @@
 # MY META
 
 > **統計ではなく「プレイヤーの思考」を共有し、最適なピックを導くWebサービス**
- align="center">
+
   <a href="https://www.mym3ta.com/">
     <img src="https://img.shields.io/badge/Try%20MY%20META-Click%20Here-blue?style=for-the-badge" />
   </a>
